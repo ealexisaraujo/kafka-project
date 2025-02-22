@@ -19,77 +19,83 @@ El proyecto está compuesto por:
 ## Estructura del Proyecto
 
 kafka-project/
+├── README.md
+├── client
+│   ├── client-configmap.yaml
+│   ├── kafka-client-pod.yaml
+│   └── kafka-client-secret.yaml
+├── commands.md
+├── kafka
+│   ├── kafka-broker-config.yaml
+│   ├── kafka-service.yaml
+│   └── kafka-statefulset.yaml
 ├── namespace.yaml
-├── zookeeper/
-│ ├── zookeeper-service.yaml
-│ └── zookeeper-statefulset.yaml
-├── kafka/
-│ ├── kafka-broker-config.yaml
-│ ├── kafka-service.yaml
-│ └── kafka-statefulset.yaml
-└── client/
-├── client-configmap.yaml
-├── kafka-client-pod.yaml
-└── kafka-client-secret.yaml
+└── zookeeper
+    ├── zookeeper-service.yaml
+    └── zookeeper-statefulset.yaml
 
 
 ## Instalación
 
 1. Crear el namespace:
 
-bash
+```bash
 kubectl apply -f namespace.yaml
+```
 
 2. Desplegar Zookeeper:
 
-bash
+```bash
 kubectl apply -f zookeeper/
+```
 
 3. Desplegar Kafka:
 
-bash
+```bash
 kubectl apply -f kafka/
+```
 
 4. Desplegar el cliente Kafka:
 
-bash
+```bash
 kubectl apply -f client/
+```
 
 ## Verificación del Despliegue
 
 Verificar que todos los pods están corriendo:
 
-bash
+```bash
 kubectl get pods -n kafka
-
+```
 
 ## Uso del Cliente Kafka
 
 ### Crear un Topic
 
-bash
+```bash
 kubectl exec -it -n kafka kafka-client -- kafka-topics.sh \
 --create --topic test-topic \
 --partitions 1 --replication-factor 3 \
 --bootstrap-server kafka:9092
-
+```
 
 ### Producir Mensajes
 
-bash
+```bash
 kubectl exec -it -n kafka kafka-client -- kafka-console-producer.sh \
 --topic test-topic \
 --bootstrap-server kafka:9092
-
+```
 
 ### Consumir Mensajes
 
-bash
+```bash
 kubectl exec -it -n kafka kafka-client -- kafka-console-consumer.sh \
 --topic test-topic \
 --from-beginning \
 --bootstrap-server kafka:9092
-
+```
 
 ## Configuración
 
@@ -106,16 +112,16 @@ El cluster utiliza autenticación SASL_PLAINTEXT con mecanismo SCRAM-SHA-256.
 ### Escalado
 Para escalar el número de brokers de Kafka:
 
-bash
+```bash
 kubectl scale statefulset kafka -n kafka --replicas=<número_deseado>
-
+```
 
 ### Limpieza
 Para eliminar todo el despliegue:
 
-bash
+```bash
 kubectl delete namespace kafka
-
+```
 
 ## Notas Importantes
 
