@@ -25,7 +25,6 @@ kafka-project/
 │   ├── client-configmap.yaml
 │   ├── kafka-client-pod.yaml
 │   └── kafka-client-secret.yaml
-├── commands.md
 ├── kafka
 │   ├── kafka-broker-config.yaml
 │   ├── kafka-service.yaml
