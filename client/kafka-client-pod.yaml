@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kafka-client
+  namespace: kafka
+spec:
+  containers:
+  - name: kafka-client
+    image: bitnami/kafka:3.9.0-debian-12-r6 # Asegúrate de usar la misma versión que en tus otros manifiestos
+    command: [ "sleep", "infinity" ]
+    env:
+    - name: CLIENT_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: kafka-client-secret
+          key: client-password
+    volumeMounts:
+    - name: client-config
+      mountPath: /tmp/client.properties
+      subPath: client.properties
+  restartPolicy: Never
+  volumes:
+  - name: client-config
+    configMap:
+      name: kafka-client-config
