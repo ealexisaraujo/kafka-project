@@ -18,6 +18,7 @@ El proyecto está compuesto por:
 
 ## Estructura del Proyecto
 
+```bash
 kafka-project/
 ├── README.md
 ├── client
@@ -33,7 +34,7 @@ kafka-project/
 └── zookeeper
     ├── zookeeper-service.yaml
     └── zookeeper-statefulset.yaml
-
+```
 
 ## Instalación
 
